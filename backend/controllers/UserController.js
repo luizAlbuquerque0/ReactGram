@@ -30,7 +30,7 @@ const register = async(req,res)=>{
     const newUser = await User.create({
         name,
         email,
-        password: passwordHash
+        password: passwordHash,
     })
 
     if(!newUser){
@@ -45,6 +45,33 @@ const register = async(req,res)=>{
     });
 }
 
+//sing user in
+const login = async(req, res)=>{
+    const {email, password} = req.body
+
+    const user = await User.findOne({email})
+
+
+    if(!user){
+        res.status(404).json({errors:["Usuário não encontrado"]});
+        return 
+    }
+
+    if(!(await bCrypt.compare(password, user.password))){
+        res.status(422).json({errors:["Senha inválida."]})
+    }
+
+    //Return user with token
+    res.status(201).json({
+        _id: user._id,
+        profileImage: user.profileImage,
+        token: genereteToken(user._id),
+    });
+
+
+}
+
 module.exports = {
     register,
+    login,
 }
