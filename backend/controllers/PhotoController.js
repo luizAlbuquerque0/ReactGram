@@ -64,4 +64,13 @@ const deletePhoto = async (req, res) => {
     }
 };
 
-module.exports = { insertPhoto, deletePhoto };
+const getAllPhotos = async (req, res) => {
+    const photos = await photo
+        .find({})
+        .sort([["createdAt", -1]])
+        .exec();
+
+    res.status(200).json(photos);
+};
+
+module.exports = { insertPhoto, deletePhoto, getAllPhotos };
