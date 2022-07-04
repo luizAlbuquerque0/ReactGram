@@ -64,6 +64,7 @@ const deletePhoto = async (req, res) => {
     }
 };
 
+//Get all photos
 const getAllPhotos = async (req, res) => {
     const photos = await photo
         .find({})
@@ -73,4 +74,16 @@ const getAllPhotos = async (req, res) => {
     res.status(200).json(photos);
 };
 
-module.exports = { insertPhoto, deletePhoto, getAllPhotos };
+//Get user photos
+const getUserPhotos = async (req, res) => {
+    const { id } = req.params;
+
+    const photos = await photo
+        .find({ userId: id })
+        .sort([["createdAd", -1]])
+        .exec();
+
+    res.status(200).json(photos);
+};
+
+module.exports = { insertPhoto, deletePhoto, getAllPhotos, getUserPhotos };
