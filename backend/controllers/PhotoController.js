@@ -200,6 +200,15 @@ const commentPhoto = async (req, res) => {
     });
 };
 
+//Search photos by title
+const searchPhoto = async (req, res) => {
+    const { q } = req.query;
+
+    const photos = await photo.find({ title: new RegExp(q, "i") }).exec();
+
+    res.status(200).json(photos);
+};
+
 module.exports = {
     insertPhoto,
     deletePhoto,
@@ -209,4 +218,5 @@ module.exports = {
     updatePhoto,
     likePhoto,
     commentPhoto,
+    searchPhoto,
 };
