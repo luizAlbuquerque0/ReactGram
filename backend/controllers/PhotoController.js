@@ -113,6 +113,7 @@ const updatePhoto = async (req, res) => {
     //Check if photo exists
     if (!Photo) {
         res.status(404).json({ erros: ["Foto não encontrada"] });
+        return;
     }
 
     //Check if photo belongs to user
@@ -143,6 +144,7 @@ const likePhoto = async (req, res) => {
     //Check if photo exists
     if (!Photo) {
         res.status(404).json({ erros: ["Foto não encontrada"] });
+        return;
     }
 
     //Check if user already liked the photo
@@ -163,6 +165,41 @@ const likePhoto = async (req, res) => {
     });
 };
 
+//Comment funcionality
+const commentPhoto = async (req, res) => {
+    const { id } = req.params;
+    const { comment } = req.body;
+
+    const reqUser = req.user;
+
+    const user = await User.findById(reqUser._id);
+
+    const Photo = await photo.findById(id);
+
+    //Check if photo exists
+    if (!Photo) {
+        res.status(404).json({ erros: ["Foto não encontrada"] });
+        return;
+    }
+
+    //Put comment into array comments
+    const userComment = {
+        comment,
+        userName: user.name,
+        userImage: user.profileImage,
+        userId: user._id,
+    };
+
+    Photo.comments.push(userComment);
+
+    await Photo.save();
+
+    res.status(200).json({
+        comment: userComment,
+        message: "O comentario foi adicionado com sucesso",
+    });
+};
+
 module.exports = {
     insertPhoto,
     deletePhoto,
@@ -171,4 +208,5 @@ module.exports = {
     getPhotoById,
     updatePhoto,
     likePhoto,
+    commentPhoto,
 };
