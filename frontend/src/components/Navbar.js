@@ -21,6 +21,7 @@ import { logout, reset } from "../slices/authSlice";
 const Navbar = () => {
   const { auth } = useAuth();
   const { user } = useSelector((state) => state.auth);
+  console.log(user);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -49,7 +50,7 @@ const Navbar = () => {
             </li>
             {user && (
               <li>
-                <NavLink to={`/users/${user.id}`}>
+                <NavLink to={`/users/${user._id}`}>
                   <BsFillCameraFill />
                 </NavLink>
               </li>
