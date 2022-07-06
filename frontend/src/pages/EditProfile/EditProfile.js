@@ -101,12 +101,15 @@ const EditProfile = () => {
         />
       )}
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Nome"
-          onChange={(e) => setName(e.target.value)}
-          value={name || ""}
-        />
+        <label>
+          <span>Seu nome:</span>
+          <input
+            type="text"
+            placeholder="Nome"
+            onChange={(e) => setName(e.target.value)}
+            value={name || ""}
+          />
+        </label>
         {/* <input type="email" placeholder="E-mail" disable value={email || ""} /> */}
         <label>
           <span>Imagem do Perfil:</span>
