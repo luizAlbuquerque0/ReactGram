@@ -213,9 +213,14 @@ const Profile = () => {
                     <BsXLg onClick={() => handleDelete(photo._id)} />
                   </div>
                 ) : (
-                  <Link className="btn" to={`/photos/${photo._id}`}>
-                    Ver
-                  </Link>
+                  <div className="actions-2">
+                    <Link
+                      className="btn btn-profile"
+                      to={`/photos/${photo._id}`}
+                    >
+                      Ver
+                    </Link>
+                  </div>
                 )}
               </div>
             ))}

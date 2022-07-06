@@ -31,6 +31,7 @@
 .photo {
   width: 32%;
   margin: 0.3%;
+  margin-right: 2em;
 }
 
 .photo img {
@@ -40,6 +41,12 @@
 .actions {
   display: flex;
   justify-content: space-around;
+  padding: 10px;
+}
+
+.actions-2 {
+  display: flex;
+  justify-content: center;
   padding: 10px;
 }
 
@@ -54,4 +61,16 @@
 .edit-photo img {
   width: 100%;
   margin-bottom: 1em;
+}
+
+.btn-profile {
+  padding: 0.8em;
+  width: 2em;
+  text-align: center;
+  opacity: 0.5;
+  transition: 1s;
+}
+
+.btn-profile:hover {
+  opacity: 1;
 }
