@@ -17,6 +17,7 @@ import { getUserDetails } from "../../slices/userSilice";
 import {
   publishPhoto,
   resetMessage,
+  resetPhotos,
   getUserPhotos,
   deletePhoto,
   updatePhoto,
@@ -29,6 +30,7 @@ const Profile = () => {
 
   const { user, loading } = useSelector((state) => state.user);
   const { user: userAuth } = useSelector((state) => state.auth);
+  const [previewImage, setPreviewImage] = useState("");
 
   const {
     photos,
@@ -50,12 +52,14 @@ const Profile = () => {
 
   //load user data
   useEffect(() => {
+    dispatch(resetPhotos());
     dispatch(getUserDetails(id));
     dispatch(getUserPhotos(id));
   }, [dispatch, id]);
 
   const handleFile = (e) => {
     const image = e.target.files[0];
+    setPreviewImage(image);
 
     setImage(image);
   };
@@ -161,6 +165,17 @@ const Profile = () => {
                   value={title || ""}
                 />
               </label>
+              {previewImage && (
+                <img
+                  className="image"
+                  src={
+                    previewImage
+                      ? URL.createObjectURL(previewImage)
+                      : `${uploads}/users/${user.profileImage}`
+                  }
+                  alt={user.name}
+                />
+              )}
               <label>
                 <span>Imagem:</span>
                 <input type="file" onChange={(e) => handleFile(e)} />

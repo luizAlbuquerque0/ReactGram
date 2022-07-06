@@ -23,13 +23,17 @@
   border-bottom: 1px solid #363636;
 }
 
+.new-photo .image {
+  margin-bottom: 1em;
+}
+
 .photos-container {
   display: flex;
   flex-wrap: wrap;
 }
 
 .photo {
-  width: 32%;
+  width: 29%;
   margin: 0.3%;
   margin-right: 2em;
 }
