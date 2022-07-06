@@ -11,14 +11,18 @@ import Photoitem from "../../components/Photoitem";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { useResetMessage } from "../../hooks/useResetComponentMessage";
 
 //Redux
-import { getPhoto } from "../../slices/photoSlice";
+import { getPhoto, like } from "../../slices/photoSlice";
+import LikeContainer from "../../components/LikeContainer";
 
 const Photo = () => {
   const { id } = useParams();
 
   const dispatch = useDispatch();
+
+  const resetMessage = useResetMessage(dispatch);
 
   const { user } = useSelector((state) => state.auth);
   const { photo, loading, error, message } = useSelector(
@@ -32,7 +36,11 @@ const Photo = () => {
     dispatch(getPhoto(id));
   }, [id, dispatch]);
 
-  //like e comentario
+  const handleLike = () => {
+    dispatch(like(photo._id));
+
+    resetMessage();
+  };
 
   if (loading) {
     return <p>Carregando...</p>;
@@ -41,6 +49,11 @@ const Photo = () => {
   return (
     <div id="photo">
       <Photoitem photo={photo} />
+      <LikeContainer photo={photo} user={user} handleLike={handleLike} />
+      <div className="message-container">
+        {error && <Message msg={error} type="error" />}
+        {message && <Message msg={message} type="success" />}
+      </div>
     </div>
   );
 };

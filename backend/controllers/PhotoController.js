@@ -80,7 +80,7 @@ const getUserPhotos = async (req, res) => {
 
     const photos = await photo
         .find({ userId: id })
-        .sort([["createdAd", -1]])
+        .sort([["createdAt", -1]])
         .exec();
 
     res.status(200).json(photos);
